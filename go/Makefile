@@ -1,5 +1,6 @@
 MAJOR_VERSION=1
 MINOR_VERSION=0
+PATCH_VERSION=1
 
 ENV_LOCAL_FILE=.env.local
 ENV_DOCKER_FILE=.env
@@ -177,17 +178,35 @@ doctor:
 	@echo -n "Docker: " && type docker >/dev/null 2>&1 && echo -n $(OK) && docker -v || echo -e $(NOTFOUND)$(INFO)https://docs.docker.com/install
 	@echo -n "Entr: " && type entr >/dev/null 2>&1 && echo -n $(OK) && entr 2>&1 | head -n 1 || echo -e $(NOTFOUND)$(INFO)https://github.com/clibs/entr
 	@echo -n "Find: " && type find >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
-	@echo -n "Grep: " && type grep >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
+	@echo -n "Git: " && type git >/dev/null 2>&1 && echo -n $(OK) && git --version || echo -e $(NOTFOUND)$(INFO)https://git-scm.com/downloads
 	@echo -n "Go: " && type go >/dev/null 2>&1 && echo -n $(OK) && go version || echo -e $(NOTFOUND)$(INFO)https://golang.org/doc/install
+	@echo -n "Grep: " && type grep >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Head: " && type head >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Mysql (Client): " && type mysql >/dev/null 2>&1 && echo -n $(OK) && mysql --version || echo $(NOTFOUND)
 	@echo -n "Netcat (nc): " && type nc >/dev/null &>/dev/null && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Npm: " && type npm >/dev/null 2>&1 && echo -n $(OK) && npm -v || echo -e $(NOTFOUND)$(INFO)https://www.npmjs.com/get-npm
 	@echo -n "Pkill: " && type pkill >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Rsync: " && type rsync >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
+	@echo -n "Sed: " && type sed >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Sleep: " && type sleep >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Source: " && type source >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo ""
+
+make%pull:
+	@mkdir -p $(TEMP_DIR) && rm -rf $(TEMP_DIR)/$(MAKEFILE_REPOSITORY_NAME) && git -C $(TEMP_DIR) clone $(MAKEFILE_REPOSITORY_URL) -q
+	@cd $(TEMP_DIR)/$(MAKEFILE_REPOSITORY_NAME)/$(MAKEFILE) && head -2 Makefile > .version
+	@$(eval VERSION="$(shell source $(TEMP_DIR)/$(MAKEFILE_REPOSITORY_NAME)/$(MAKEFILE)/.version && echo $$MAJOR_VERSION$$MINOR_VERSION$$PATCH_VERSION)")
+	@echo -e "\n*----------* \033[33m INSTALL MAKEFILE \033[0m *----------*\n\n\033[1;33mCurrent version:\033[0m $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCH_VERSION)\033[0m"
+	@if [[ $(MAJOR_VERSION)$(MINOR_VERSION)$(PATCH_VERSION) < $(VERSION) ]]; then \
+		echo -en "\033[1;33mNew available version:\033[0m " && echo 200 | sed 's/./&./g; s/.$$//'; \
+		echo -en "\n\033[5;31mAre you sure you want to continue?\033[0m \033[1;36m[y/n]\033[0m: " ; \
+		read RESPONSE ; \
+		if [[ $$RESPONSE = [yY] ]] ; then \
+			cp $(TEMP_DIR)/$(MAKEFILE_REPOSITORY_NAME)/$(MAKEFILE)/* . ; \
+		fi \
+	else \
+		echo -e "Already up-to-date\n"; \
+	fi;
 
 make%debug:
 	@echo -e "\n*---------------* \033[33m DEBUG \033[0m *---------------*\n"
