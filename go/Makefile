@@ -198,7 +198,7 @@ make%pull:
 	@$(eval VERSION="$(shell source $(TEMP_DIR)/$(MAKEFILE_REPOSITORY_NAME)/$(MAKEFILE)/.version && echo $$MAJOR_VERSION$$MINOR_VERSION$$PATCH_VERSION)")
 	@echo -e "\n*----------* \033[33m INSTALL MAKEFILE \033[0m *----------*\n\n\033[1;33mCurrent version:\033[0m $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCH_VERSION)\033[0m"
 	@if [[ $(MAJOR_VERSION)$(MINOR_VERSION)$(PATCH_VERSION) < $(VERSION) ]]; then \
-		echo -en "\033[1;33mNew available version:\033[0m " && echo 200 | sed 's/./&./g; s/.$$//'; \
+		echo -en "\033[1;33mNew available version:\033[0m " && echo $(VERSION) | sed 's/./&./g; s/.$$//'; \
 		echo -en "\n\033[5;31mAre you sure you want to continue?\033[0m \033[1;36m[y/n]\033[0m: " ; \
 		read RESPONSE ; \
 		if [[ $$RESPONSE = [yY] ]] ; then \
