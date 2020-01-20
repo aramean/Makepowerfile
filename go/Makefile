@@ -1,6 +1,6 @@
 MAJOR_VERSION=1
 MINOR_VERSION=0
-PATCH_VERSION=1
+PATCH_VERSION=3
 
 ENV_LOCAL_FILE=.env.local
 ENV_DOCKER_FILE=.env
@@ -210,7 +210,7 @@ make%pull:
 
 make%debug:
 	@echo -e "\n*---------------* \033[33m DEBUG \033[0m *---------------*\n"
-	@echo -e "Makefile version: \033[1;36m$(MAJOR_VERSION).$(MINOR_VERSION)\033[0m"
+	@echo -e "Makefile version: \033[1;36m$(MAJOR_VERSION).$(MINOR_VERSION).$(PATCH_VERSION)\033[0m"
 	@echo -e "Application binary name: \033[1;36m$(APP_BINARY_NAME)\033[0m"
 	@echo -e "Application binary entrypoint: \033[1;36m$(APP_BINARY_ENTRYPOINT)\033[0m"
 	@echo -e "Application database migration & seed directory: \033[1;36m/$(APP_DB_DIR)\033[0m"
