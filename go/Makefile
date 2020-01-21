@@ -6,9 +6,7 @@ ENV_LOCAL_FILE=.env.local
 ENV_DOCKER_FILE=.env
 ENV_LOCAL_DEV_FILE=.env.development.local
 
-include $(ENV_LOCAL_FILE)
-include $(ENV_DOCKER_FILE)
-include $(ENV_LOCAL_DEV_FILE)
+include $(ENV_LOCAL_FILE) $(ENV_DOCKER_FILE) $(ENV_LOCAL_DEV_FILE)
 
 SHELL := /bin/bash # Use bash syntax
 ENV_LOCAL_ALL=$(shell cat $(ENV_LOCAL_FILE) | while read -r line ; do echo "-e $$line"; done)
