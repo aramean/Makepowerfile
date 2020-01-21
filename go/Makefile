@@ -188,7 +188,7 @@ doctor:
 	@echo -n "Grep: " && type grep >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Head: " && type head >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Mysql (Client): " && type mysql >/dev/null 2>&1 && echo -n $(OK) && mysql --version || echo $(NOTFOUND)
-  @echo -n "Netcat (nc): " && type nc >/dev/null &>/dev/null && echo $(OK) || echo $(NOTFOUND)
+	@echo -n "Netcat (nc): " && type nc >/dev/null &>/dev/null && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Npm: " && type npm >/dev/null 2>&1 && echo -n $(OK) && npm -v || echo -e $(NOTFOUND)$(INFO)https://www.npmjs.com/get-npm
 	@echo -n "Pkill: " && type pkill >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Rsync: " && type rsync >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
