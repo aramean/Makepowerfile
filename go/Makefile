@@ -140,6 +140,12 @@ npm%install:
 npm%update:
 	@npm update
 
+composer%install:
+	@composer install
+
+composer%update:
+	@composer update
+
 watch%start:
 	@if type entr &> /dev/null; then \
 		echo -e "\033[3;33mRunning entr in background ...\033[0m" ; \
@@ -172,6 +178,7 @@ doctor:
 	@$(eval INFO="$(shell echo -e '\033[3;33m- For installation and instructions, Please see: \033[0m')")
 	@echo -e "\n*---------------* \033[33m DOCTOR \033[0m *---------------*\n"
 	@echo -n "Cat: " && type cat >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
+	@echo -n "Composer: " && type composer >/dev/null 2>&1 && echo -n $(OK) && composer -V --no-ansi || echo -e $(NOTFOUND)$(INFO)https://getcomposer.org/download
 	@echo -n "Copy (cp): " && type cp >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Docker: " && type docker >/dev/null 2>&1 && echo -n $(OK) && docker -v || echo -e $(NOTFOUND)$(INFO)https://docs.docker.com/install
 	@echo -n "Entr: " && type entr >/dev/null 2>&1 && echo -n $(OK) && entr 2>&1 | head -n 1 || echo -e $(NOTFOUND)$(INFO)https://github.com/clibs/entr
@@ -181,7 +188,7 @@ doctor:
 	@echo -n "Grep: " && type grep >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Head: " && type head >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Mysql (Client): " && type mysql >/dev/null 2>&1 && echo -n $(OK) && mysql --version || echo $(NOTFOUND)
-	@echo -n "Netcat (nc): " && type nc >/dev/null &>/dev/null && echo $(OK) || echo $(NOTFOUND)
+  @echo -n "Netcat (nc): " && type nc >/dev/null &>/dev/null && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Npm: " && type npm >/dev/null 2>&1 && echo -n $(OK) && npm -v || echo -e $(NOTFOUND)$(INFO)https://www.npmjs.com/get-npm
 	@echo -n "Pkill: " && type pkill >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
 	@echo -n "Rsync: " && type rsync >/dev/null 2>&1 && echo $(OK) || echo $(NOTFOUND)
