@@ -220,7 +220,7 @@ make%install:
 	elif ! [ -a ../$(MAKEFILE_TARGET)/Makefile ] ; then \
 		echo -e "\033[1;31m[ERROR] Makefile target not found\033[0m"; \
 	else \
-		echo -e "\n*----------* \033[33m INSTALL POWERMAKEFILE \033[0m *----------*\n\n\033[1;33mMakefile:\033[0m $(MAKEFILE_TARGET)\n"; \
+		echo -e "\n*----------* \033[33m INSTALL MAKEPOWERFILE \033[0m *----------*\n\n\033[1;33mMakefile:\033[0m $(MAKEFILE_TARGET)\n"; \
 		read -p "Enter location of your application: " APP_PATH ; \
 		if ! [ -a $$APP_PATH ] ; then \
 			echo -e "\033[1;31m[ERROR] Path not found\033[0m"; \
@@ -230,7 +230,7 @@ make%install:
 			read RESPONSE ; \
 			if [[ $$RESPONSE = [yY] ]] ; then \
 				cp -v {.,}* $$APP_PATH ; \
-				echo -e "\033[7;32;5m [OK] Powermakefile installed \033[0m\n"; \
+				echo -e "\033[7;32;5m [OK] Makepowerfile installed \033[0m\n"; \
 			fi \
 		fi; \
 		echo -e ""; \
