@@ -213,6 +213,16 @@ make%pull:
 		echo -e "Already up-to-date\n"; \
 	fi;
 
+make%install:
+	@$(eval MAKEFILE_TARGET="$(filter-out $@,$(MAKECMDGOALS))")
+	@echo -e "\n*----------* \033[33m INSTALL POWERMAKEFILE \033[0m *----------*\n\n\033[1;33mMakefile:\033[0m $(MAKEFILE_TARGET)\n"
+	@read -p "Enter location of your application: " APP_PATH ; \
+	if ! [ -a $$APP_PATH ] ; then \
+		echo -e "\033[1;31m[ERROR] Application not found\033[0m"; \
+	else \
+		echo -e "Application found"; \
+	fi;
+
 make%debug:
 	@echo -e "\n*---------------* \033[33m DEBUG \033[0m *---------------*\n"
 	@echo -e "Makefile version: \033[1;36m$(MAJOR_VERSION).$(MINOR_VERSION).$(PATCH_VERSION)\033[0m"
