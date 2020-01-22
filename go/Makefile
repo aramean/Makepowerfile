@@ -215,13 +215,26 @@ make%pull:
 
 make%install:
 	@$(eval MAKEFILE_TARGET="$(filter-out $@,$(MAKECMDGOALS))")
-	@echo -e "\n*----------* \033[33m INSTALL POWERMAKEFILE \033[0m *----------*\n\n\033[1;33mMakefile:\033[0m $(MAKEFILE_TARGET)\n"
-	@read -p "Enter location of your application: " APP_PATH ; \
-	if ! [ -a $$APP_PATH ] ; then \
-		echo -e "\033[1;31m[ERROR] Application not found\033[0m"; \
+	@if [ -z $(MAKEFILE_TARGET) ] ; then \
+		echo -e "\033[1;31m[ERROR] Argument not found\033[0m"; \
+	elif ! [ -a ../$(MAKEFILE_TARGET)/Makefile ] ; then \
+		echo -e "\033[1;31m[ERROR] Makefile target not found\033[0m"; \
 	else \
-		echo -e "Application found"; \
-	fi;
+		echo -e "\n*----------* \033[33m INSTALL POWERMAKEFILE \033[0m *----------*\n\n\033[1;33mMakefile:\033[0m $(MAKEFILE_TARGET)\n"; \
+		read -p "Enter location of your application: " APP_PATH ; \
+		if ! [ -a $$APP_PATH ] ; then \
+			echo -e "\033[1;31m[ERROR] Path not found\033[0m"; \
+		else \
+			echo -e "\n\033[1;33mInstallation path:\033[0m $$APP_PATH"; \
+			echo -en "\n\033[5;31mAre you sure you want to continue?\033[0m \033[1;36m[y/n]\033[0m: " ; \
+			read RESPONSE ; \
+			if [[ $$RESPONSE = [yY] ]] ; then \
+				cp -v {.,}* $$APP_PATH ; \
+				echo -e "\033[7;32;5m [OK] Powermakefile installed \033[0m\n"; \
+			fi \
+		fi; \
+		echo -e ""; \
+	fi; \
 
 make%debug:
 	@echo -e "\n*---------------* \033[33m DEBUG \033[0m *---------------*\n"
